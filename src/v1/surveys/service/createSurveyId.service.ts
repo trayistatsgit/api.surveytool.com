@@ -19,7 +19,6 @@ export const createSurvey = async ():Promise<ServiceResponse>  => {
         }
         const create = await Survey.create(surveyCreateData);
         console.log('Survey created successfully:', create);
-
         return{
             status: 200,
             message: 'Survey created successfully',
