@@ -2,9 +2,6 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
 // import {sequelize} from './config/db/config';
-
-dotenv.config();
-
 const app: Application = express();
 
 // Middleware

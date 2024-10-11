@@ -1,42 +1,48 @@
-// utils/responseHandler.ts
-
 import { Response } from 'express';
-import { ServiceResponse } from '../utils/serviceResponse';
+export interface ServiceResponse<T = unknown> {
+  status: number;
+  data: T; // Use a generic type T for more specific data
+  message: string;
+  errors: boolean;
+  version?: string;
+  success: boolean;
+}
 
 export class ServiceResponseImpl implements ServiceResponse {
   status: number;
   data: any;
   message: string;
-  errors?: boolean;
+  errors: boolean;
+  success: boolean;
   version?: string;
-  success?: boolean;
 
-  constructor({ status, data, message, errors = false, success }: Partial<ServiceResponse>) {
-    this.status = status || 200; // Default status is 200
-    this.data = data || null; // Default data is null
-    this.message = message || ''; // Default message is an empty string
+  constructor({ status = 200, data = null, message = '', errors = false, success = true }: Partial<ServiceResponse>) {
+    this.status = status;
+    this.data = data;
+    this.message = message;
     this.errors = errors;
-    this.success = success !== undefined ? success : true; // Default success is true
+    this.success = success;
   }
 }
 
-export const responseHandler = (res: Response, responseData: ServiceResponse) => {
-  return res.status(responseData.status).send(new ServiceResponseImpl(responseData));
+export const responseHandler = (res: Response, responseData: Partial<ServiceResponse>): Response => {
+  const response = new ServiceResponseImpl(responseData);
+  return res.status(response.status).json(response);
 };
 
-export const errorResponseHandler = (res: Response, error: Error): Response => {
-  let errorData: unknown = error;
-  if (error.stack) {
-    errorData = error.stack;
+export const errorResponseHandler = (res: Response, error: unknown): Response => {
+  if (error instanceof Error) {
+      console.error('Error:', error.stack || error.message);
+  } else {
+      console.error('Unexpected error:', error);
   }
-  // Here you can implement your own logging mechanism if needed
-  console.error('Error:', errorData);
-  
+
+  // Send a structured error response
   return responseHandler(res, {
-    message: error.message,
-    status: 500,
-    data: [],
-    success: false,
-    errors: true,
+      message: error instanceof Error ? error.message : "An unexpected error occurred.",
+      status: 500,
+      data: null,
+      success: false,
+      errors: true,
   });
 };
