@@ -1,5 +1,3 @@
-// src/v1/model/questionType.ts
-
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../../../config/db/connection';
 
@@ -35,8 +33,4 @@ questionType.init(
     freezeTableName: true,
   }
 );
-
-export const createDAta = () =>{
-  questionType.sync({force:false})
-}
 export default questionType;

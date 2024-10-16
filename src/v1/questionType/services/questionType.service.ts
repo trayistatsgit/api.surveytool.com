@@ -3,7 +3,6 @@ import questionType from "../model/model";
 
 // Get all question types with structured response
 export const getAllQuestionTypes = async (): Promise<ServiceResponse<questionType[]>> => {
-  try {
     const questionTypes = await questionType.findAll({
       attributes: ['id', 'name'],
       where: {
@@ -11,7 +10,6 @@ export const getAllQuestionTypes = async (): Promise<ServiceResponse<questionTyp
       },
     });
 
-    // Structure the response
     return {
       success: true,
       status: 200,
@@ -19,13 +17,4 @@ export const getAllQuestionTypes = async (): Promise<ServiceResponse<questionTyp
       message: "Question types retrieved successfully",
       errors: false, 
     };
-  } catch (error) {
-    return {
-      success: false,
-      status: 500,
-      data: [],
-      message: error instanceof Error ? error.message : "Error retrieving question types",
-      errors: true, 
-    };
-  }
 };
