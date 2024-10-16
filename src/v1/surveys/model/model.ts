@@ -52,11 +52,10 @@ Survey.init(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      unique: true,
     },
     surveyName: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     surveyDescription: {
       type: DataTypes.TEXT,
@@ -106,4 +105,5 @@ Survey.init(
     ],
   }
 );
+
 export default Survey;

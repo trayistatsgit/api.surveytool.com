@@ -1,5 +1,5 @@
 import express from 'express';
-import { createSurvey } from './controller/controller';
+import { createSurveyId } from './controller/controller';
 const surveyRouter = express.Router();
-surveyRouter.get('/crate-survey', createSurvey);
+surveyRouter.post('/create-survey-id', createSurveyId);
 export { surveyRouter };

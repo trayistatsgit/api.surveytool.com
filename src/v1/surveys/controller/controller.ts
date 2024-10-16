@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import surveyService from "../service";
 import { errorResponseHandler, responseHandler } from "../../helpers/responseHandler";
 
-export const createSurvey = async (req: Request, res: Response) => {
+export const createSurveyId = async (req: Request, res: Response): Promise<void> => {
     try {
-        const response = await surveyService.createSurvey();
+        const response = await surveyService.createSurveyId();
         responseHandler(res, response);
     } catch (error) {
         errorResponseHandler(res, error);

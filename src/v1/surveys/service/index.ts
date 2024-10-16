@@ -1,6 +1,6 @@
-import { createSurvey } from "./createSurveyId.service";
+import { createSurveyId } from "./createSurveyId.service";
 
 const surveyService = {
-    createSurvey
+    createSurveyId
 }
 export default surveyService;

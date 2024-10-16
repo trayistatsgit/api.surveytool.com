@@ -7,7 +7,8 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
     port: dbConfig.port,
     dialect: dbConfig.dialect,
     dialectOptions: dbConfig.dialectOptions,
-    pool: dbConfig.pool
+    pool: dbConfig.pool,
+    timezone: '+00:00'
 });
 
 // Function to connect to the database
@@ -20,8 +21,6 @@ async function connect(): Promise<void> {
     }
 }
 
-// Connect to the database when the file is loaded
-connect();
-
+connect()
 // Export the Sequelize instance for use in your models
 export { sequelize };
