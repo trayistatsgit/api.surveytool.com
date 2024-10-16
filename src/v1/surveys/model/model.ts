@@ -19,7 +19,7 @@ interface SurveyAttributes {
 }
 
 // Optional fields for creating a new survey
-type SurveyCreationAttributes = Optional<SurveyAttributes, 'id' | 'surveyDescription' | 'logo' | 'updatedBy'>;
+type SurveyCreationAttributes = Optional<SurveyAttributes, 'id' | 'surveyDescription' | 'logo' | 'updatedBy'| 'surveyId'>;
 
 // Survey model class
 class Survey extends Model<SurveyAttributes, SurveyCreationAttributes> implements SurveyAttributes {
