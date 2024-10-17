@@ -41,7 +41,6 @@ SurveyQuestion.init(
     questionId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      unique: true,
       autoIncrement: true,
     },
     surveyId: {
@@ -92,16 +91,16 @@ SurveyQuestion.init(
   }
 );
 
-// Survey.hasMany(SurveyQuestion, {
-//   foreignKey: 'surveyId',
-//   sourceKey: 'surveyId',
-//   as: 'surveyQuestions',
-// });
+// Associations
+Survey.hasMany(SurveyQuestion, {
+  foreignKey: 'surveyId',
+  sourceKey: 'surveyId',
+  as: 'surveyQuestions', // Alias for the association
+});
 
-// SurveyQuestion.belongsTo(Survey, {
-//   foreignKey: 'surveyId',
-//   targetKey: 'surveyId',
-//   as: 'surveys',
-// });
-
+SurveyQuestion.belongsTo(Survey, {
+  foreignKey: 'surveyId',
+  targetKey: 'surveyId',
+  as: 'surveys', // Alias for the association
+});
 export default SurveyQuestion;

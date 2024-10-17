@@ -10,3 +10,35 @@ export const createSurveyId = async (req: Request, res: Response): Promise<void>
         errorResponseHandler(res, error);
     }
 };
+export const updateSurvey = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const bodyData = req.body
+        bodyData.createdBy = 1
+        const response = await surveyService.updateSurvey(bodyData);
+        responseHandler(res, response);
+    } catch (error) {
+        errorResponseHandler(res, error);
+    }
+};
+export const upsertSurveyQuestion = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const bodyData = req.body
+        bodyData.createdBy = 1
+        const response = await surveyService.upsertSurveyQuestions(bodyData);
+        responseHandler(res, response);
+    } catch (error) {
+        errorResponseHandler(res, error);
+    }
+};
+export const getSurveyById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const bodyData = {
+            surveyId: req.params.surveyId as unknown as string,
+            userId: 1
+        }
+        const response = await surveyService.getSurveyById(bodyData);
+        responseHandler(res, response);
+    } catch (error) {
+        errorResponseHandler(res, error);
+    }
+};

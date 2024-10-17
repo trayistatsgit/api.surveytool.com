@@ -3,6 +3,7 @@ import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 import logger from 'morgan';
 import { allRouter } from './v1/routes/routes';
+import { connectToDatabase } from './config/db/connection';
 
 const app = express();
 app.use(logger('dev'));
@@ -21,6 +22,7 @@ app.use(function (_req: Request, res: Response, next: NextFunction) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
+connectToDatabase();
 app.get('/api', (request: Request, response: Response) => {
   const dateTime = new Date();
   response.status(200).json({ msg: `Server is running. Time: ${dateTime} ENV: ${environment}` });

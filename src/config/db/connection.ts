@@ -1,26 +1,53 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Options, Dialect } from 'sequelize';
 import { dbConfig } from './config';
-
-// Create a Sequelize instance
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
-    host: dbConfig.host,
-    port: dbConfig.port,
-    dialect: dbConfig.dialect,
-    dialectOptions: dbConfig.dialectOptions,
-    pool: dbConfig.pool,
-    timezone: '+00:00'
-});
-
-// Function to connect to the database
-async function connect(): Promise<void> {
-    try {
-        await sequelize.authenticate();
-        console.log('Connected to MSSQL database');
-    } catch (error) {
-        console.error('Error connecting to MSSQL database:', error);
-    }
+interface SequelizeConfig extends Options {
+  host: string;
+  port: number;
+  dialect: Dialect;
 }
 
-connect()
-// Export the Sequelize instance for use in your models
-export { sequelize };
+const createSequelizeInstance = (database: string, username: string, password: string, host: string, port: number): Sequelize => {
+  return new Sequelize(database, username, password, {
+    host,
+    port,
+    dialect: dbConfig.dialect as Dialect,
+    logging: true,
+    dialectOptions: {
+      options: {
+        encrypt: true,
+        enableArithAbort: true,
+        connectionTimeout: 30000,
+        requestTimeout: 60000,
+      },
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      timestamps: true,
+    },
+    pool: {
+      max: 10,
+      min: 2,
+      idle: 10000,
+      acquire: 60000,
+      evict: 10000,
+    },
+  } as SequelizeConfig);
+};
+
+export const sequelize = createSequelizeInstance(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.host, dbConfig.port);
+const connectToDatabase = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log(`✔ Connected to ${dbConfig.database} successfully.`);
+  } catch (error) {
+    console.error('✘ Unable to connect to the database:', error);
+    throw error;
+  }
+};
+
+
+export { connectToDatabase };
+export default sequelize;

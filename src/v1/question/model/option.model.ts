@@ -91,19 +91,14 @@ SurveyOption.init(
     }
 );
 
-// Define associations
-SurveyOption.hasMany(SurveyQuestion, {
+SurveyQuestion.hasMany(SurveyOption, {
     foreignKey: 'questionId',
-    sourceKey: 'questionId',
-    as: 'surveyQuestions',
-});
-
-// If self-referencing, make sure this is structured correctly
-SurveyOption.belongsTo(SurveyOption, {
+    as: 'options',
+  });
+  SurveyOption.belongsTo(SurveyQuestion, {
     foreignKey: 'questionId',
-    targetKey: 'questionId',
-    as: 'parentOption',
-});
+  });
+  
 
 
 export default SurveyOption;
