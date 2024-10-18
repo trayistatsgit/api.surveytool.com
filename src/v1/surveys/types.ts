@@ -20,3 +20,7 @@ export interface IGetSurveyById {
     surveyId: string;
     userId: string | number;
 }
+export interface IOptionDeletData {
+    optionId: number;
+    userId: string;
+}

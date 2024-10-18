@@ -42,3 +42,15 @@ export const getSurveyById = async (req: Request, res: Response): Promise<void> 
         errorResponseHandler(res, error);
     }
 };
+export const surveyOptionSoftDelete = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const bodyData = {
+            optionId: req.params.optionId as unknown as number,
+            userId: '1'
+        }
+        const response = await surveyService.surveyOptionSoftDelete(bodyData);
+        responseHandler(res, response);
+    } catch (error) {
+        errorResponseHandler(res, error);
+    }
+};
