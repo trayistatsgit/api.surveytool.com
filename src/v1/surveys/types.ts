@@ -24,3 +24,9 @@ export interface IOptionDeletData {
     optionId: number;
     userId: string;
 }
+export interface IGetSurveyDetail {
+    surveyId: string;
+    userId: number;
+    surveyName: string;
+    createdBy: string
+}

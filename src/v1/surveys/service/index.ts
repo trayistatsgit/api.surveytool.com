@@ -3,12 +3,13 @@ import { getSurveyById } from "./getSurveyById.service";
 import { surveyOptionSoftDelete } from "./surveyOptionSoftDelete.service";
 import { updateSurvey } from "./updateSurvey.service";
 import { upsertSurveyQuestions } from "./upsertSurveyQuestions.service";
-
+import {surveyDetail} from "./surveyDetail.service"
 const surveyService = {
     createSurveyId,
     updateSurvey,
     upsertSurveyQuestions,
     getSurveyById,
-    surveyOptionSoftDelete
+    surveyOptionSoftDelete,
+    surveyDetail
 }
 export default surveyService;
