@@ -41,18 +41,11 @@ SurveyQuestion.init(
     questionId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      unique: true,
       autoIncrement: true,
     },
     surveyId: {
       type: DataTypes.CHAR(36),
       allowNull: false,
-      references: {
-        model: Survey,
-        key: 'surveyId',
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
     questionName: {
       type: DataTypes.STRING(255),
@@ -98,16 +91,16 @@ SurveyQuestion.init(
   }
 );
 
+// Associations
 Survey.hasMany(SurveyQuestion, {
   foreignKey: 'surveyId',
   sourceKey: 'surveyId',
-  as: 'surveyQuestions',
+  as: 'surveyQuestions', // Alias for the association
 });
 
 SurveyQuestion.belongsTo(Survey, {
   foreignKey: 'surveyId',
   targetKey: 'surveyId',
-  as: 'survey',
+  as: 'surveys', // Alias for the association
 });
-
 export default SurveyQuestion;

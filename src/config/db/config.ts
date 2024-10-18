@@ -6,9 +6,21 @@ export const dbConfig = {
   password: 'SPT@123106',
   database: 'spt_staging', // Use the specified database
   port: 1433,
+  sync: false,
   dialectOptions: {
-      encrypt: true, // For Azure, set this to true
-      trustServerCertificate: true // Use this for local dev / self-signed certs
+    options: {
+      encrypt: true,
+      enableArithAbort: true,
+      connectionTimeout: 30000,
+      requestTimeout: 60000,
+    },
+  },
+  define: {
+    underscored: false,
+    freezeTableName: true,
+    charset: 'utf8',
+    collate: 'utf8_general_ci',
+    timestamps: true,
   },
   pool: {
       max: 1000,

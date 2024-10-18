@@ -1,4 +1,4 @@
-import SurveyQuestion from "../../question/model/model"
+import SurveyQuestion from "../../question/model/question.model"
 import { IAddQuestion } from "../types"
 
 export const addQuestionUtils = async (bodyData: IAddQuestion) =>{
