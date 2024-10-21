@@ -1,9 +1,9 @@
 
 import SurveyOption from '../../question/model/option.model'
 import { ServiceResponse } from '../../helpers/responseHandler'
-import { IOptionDeletData } from '../types'
+import { IOptionDeleteData } from '../types'
 
-export const surveyOptionSoftDelete = async (optionDeleteData: IOptionDeletData): Promise<ServiceResponse> => {
+export const surveyOptionSoftDelete = async (optionDeleteData:  IOptionDeleteData ): Promise<ServiceResponse> => {
     const { optionId, userId } = optionDeleteData
     const surveyOption = await SurveyOption.update(
         {

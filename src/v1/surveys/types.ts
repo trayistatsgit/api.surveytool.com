@@ -1,32 +1,36 @@
-export interface IUpdateSurvey{
+// Interface for updating a survey
+export interface IUpdateSurvey {
     surveyId: string;
     userId: string;
     surveyName: string;
     surveyDescription: string;
-}
-export interface IAddQuestion {
+  }
+  
+  // Interface for adding a question to a survey
+  export interface IAddQuestion {
     surveyId: string;
     questionId: number;
     questionType: number;
     questionText: string;
     createdBy: string;
     options: IOptionData[];
-}
-interface IOptionData {
+  }
+  
+  // Interface for question options
+  interface IOptionData {
     optionId: number | null;
     optionName: string | null;
-}
-export interface IGetSurveyById {
+  }
+  
+  // Interface for retrieving survey details by ID
+  export interface IGetSurveyById {
     surveyId: string;
     userId: string | number;
-}
-export interface IOptionDeletData {
+  }
+  
+  // Interface for deleting an option
+  export interface IOptionDeleteData {
     optionId: number;
-    userId: string;
-}
-export interface IGetSurveyDetail {
-    surveyId: string;
-    userId: number;
-    surveyName: string;
-    createdBy: string
-}
+    userId:  string;
+  }
+  

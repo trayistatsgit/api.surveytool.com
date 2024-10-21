@@ -1,50 +1,25 @@
+import Survey from "../model/model"; // Adjust the path to your Survey model
+import { ServiceResponse } from "../../helpers/responseHandler"; // Adjust the path to your response handler
 
-import Survey from "../model/model";
-import { IGetSurveyDetail } from "../types";
-
-export const surveyDetail = async (
-  getSurveyQueryData: IGetSurveyDetail
-): Promise<{ status: number; message: string; data: any; errors: boolean; success: boolean }> => {
-  const { surveyId, createdBy, surveyName } = getSurveyQueryData;
-
+export const surveyDetail = async (bodyData?: { surveyId: NumberConstructor; surveyName: string; createdAt: Date; isActive: any; }): Promise<ServiceResponse> => {
   try {
-    const surveyData = await Survey.findAll({
-      where: {
-        surveyStatus: "draft",
-        surveyId: surveyId,
-        createdBy: createdBy,
-        surveyName: surveyName,
-      },
-      include: [
-        {
-          model: Survey,
-          as: "Survey",
-        },
-      ],
+    // Fetch survey data from the database
+    const surveys = await Survey.findAll({
+      attributes: ['id', 'surveyName', 'surveyStatus', 'isActive', 'createdAt'], // Specify the attributes to retrieve
     });
-
-    if (!surveyData) {
-      return {
-        status: 404,
-        message: "Survey not found.",
-        data: null,
-        errors: true,
-        success: false,
-      };
-    }
 
     return {
       status: 200,
-      message: "Survey Detail.",
-      data: surveyData,
+      message: "Surveys fetched successfully.",
+      data: surveys,
       errors: false,
       success: true,
     };
-  } catch (error) {
-    console.error("Error fetching survey detail:", error);
+  } catch (error: any) {
+    console.error("Error fetching surveys:", error);
     return {
       status: 500,
-      message: "Internal Server Error.",
+      message: error.message || "Internal Server Error.",
       data: null,
       errors: true,
       success: false,
