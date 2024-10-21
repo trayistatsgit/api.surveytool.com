@@ -1,28 +1,33 @@
-import Survey from "../model/model"; // Adjust the path to your Survey model
-import { ServiceResponse } from "../../helpers/responseHandler"; // Adjust the path to your response handler
+import Survey from "../model/model"; 
+import { ServiceResponse } from "../../helpers/responseHandler"; 
 
-export const surveyDetail = async (bodyData?: { surveyId: NumberConstructor; surveyName: string; createdAt: Date; isActive: any; }): Promise<ServiceResponse> => {
-  try {
-    // Fetch survey data from the database
-    const surveys = await Survey.findAll({
-      attributes: ['id', 'surveyName', 'surveyStatus', 'isActive', 'createdAt'], // Specify the attributes to retrieve
-    });
+export const surveyDetail = async (queryParams?: { 
+  currentPage ?: number; 
+  pageSize?: number; 
+}): Promise<ServiceResponse> => {
+  
+  const { currentPage = 1, pageSize = 8 } = queryParams || {}; 
 
-    return {
-      status: 200,
-      message: "Surveys fetched successfully.",
-      data: surveys,
-      errors: false,
-      success: true,
-    };
-  } catch (error: any) {
-    console.error("Error fetching surveys:", error);
-    return {
-      status: 500,
-      message: error.message || "Internal Server Error.",
-      data: null,
-      errors: true,
-      success: false,
-    };
-  }
-};
+  const offset = (currentPage - 1) * pageSize; 
+
+  const { count: totalCount, rows: surveys } = await Survey.findAndCountAll({
+    attributes: ['id', 'surveyName', 'surveyStatus', 'isActive', 'createdAt'],
+    offset, 
+    limit: pageSize, 
+  });
+
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  return {
+    status: 200,
+    message: "Surveys fetched successfully.",
+    data: {
+      surveys,
+      totalCount,
+      currentPage,
+      totalPages,
+    },
+    errors: false,
+    success: true,
+  };
+}; 
