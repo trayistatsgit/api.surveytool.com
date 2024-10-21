@@ -8,13 +8,13 @@ export interface IAddQuestion {
     surveyId: string;
     questionId: number;
     questionType: number;
-    questionText: string;
+    questionName: string;
     createdBy: string;
     options: IOptionData[];
 }
 interface IOptionData {
     optionId: number | null;
-    optionName: string | null;
+    optionText: string | null;
 }
 export interface IGetSurveyById {
     surveyId: string;

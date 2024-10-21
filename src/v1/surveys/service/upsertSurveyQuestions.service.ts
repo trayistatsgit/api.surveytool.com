@@ -4,8 +4,8 @@ import { IAddQuestion } from '../types';
 import SurveyOption from '../../question/model/option.model';
 
 export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise<ServiceResponse> => {
-    const { surveyId, questionId, questionText, questionType, createdBy, options } = questionData;
-    if (!surveyId || !questionText || !questionType) {
+    const { surveyId, questionId, questionName, questionType, createdBy, options } = questionData;
+    if (!surveyId || !questionName || !questionType) {
         return {
             status: 400,
             message: 'Survey ID, question name, or question type is missing',
@@ -20,13 +20,13 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
     if (questionId) {
         whereCondition.questionId = questionId;
     } else {
-        whereCondition.questionName = questionText;
+        whereCondition.questionName = questionName;
     }
     const [questions, created] = await SurveyQuestion.findOrCreate({
         where: whereCondition,
         defaults: {
             surveyId: surveyId,
-            questionName: questionText,
+            questionName: questionName,
             questionTypeId: questionType,
             createdBy: createdBy,
         },
@@ -42,7 +42,7 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
                 if (option.optionId) {
                     optionWhereCondition.optionId = option.optionId;
                 } else {
-                    optionWhereCondition.optionText = option.optionName;
+                    optionWhereCondition.optionText = option.optionText;
                 }
 
                 const [optionData, created] = await SurveyOption.findOrCreate({
@@ -50,12 +50,12 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
                     defaults: {
                         surveyId: surveyId,
                         questionId: questions.questionId,
-                        optionText: option.optionName,
+                        optionText: option.optionText,
                         createdBy: createdBy,
                     },
                 });
                 if (!created) {
-                    optionData.optionText = option.optionName;
+                    optionData.optionText = option.optionText;
                     optionData.updatedBy = createdBy;
                     await optionData.save();
                 }
@@ -65,7 +65,7 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
         }
         const { surveyId: sId, questionId: qId, questionName, questionTypeId } = questions;
         const formatedData = {
-            surveyId: sId, questionId: qId, questionText: questionName, questionType: questionTypeId, options: upsertedOptionData
+            surveyId: sId, questionId: qId, questionName: questionName, questionType: questionTypeId, options: upsertedOptionData
         }
         return {
             status: 200,
@@ -76,7 +76,7 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
         };
     }
     // Update existing question
-    questions.questionName = questionText;
+    questions.questionName = questionName;
     questions.questionTypeId = questionType;
     questions.updatedBy = createdBy;
     await questions.save();
