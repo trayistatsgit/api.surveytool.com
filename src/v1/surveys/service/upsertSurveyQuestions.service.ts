@@ -29,9 +29,11 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
             questionName: questionName,
             questionTypeId: questionType,
             createdBy: createdBy,
+            isActive: 1,
+            pageNo: 1
         },
     });
-    let upsertedOptionData: { optionId: number; optionText: string; }[] = []
+    let upsertedOptionData: { optionId: number | null; optionText: string | null; }[] = []
     if (created) {
         if (options && options.length > 0) {
             upsertedOptionData = await Promise.all(options.map(async (option) => {
@@ -52,6 +54,7 @@ export const upsertSurveyQuestions = async (questionData: IAddQuestion): Promise
                         questionId: questions.questionId,
                         optionText: option.optionText,
                         createdBy: createdBy,
+                        isActive: 1
                     },
                 });
                 if (!created) {

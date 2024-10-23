@@ -1,11 +1,13 @@
-// config.ts
+import { Dialect } from "sequelize";
+import dotenv from 'dotenv';
+dotenv.config();
 export const dbConfig = {
-  dialect: 'mssql' as 'mssql',
-  host: '68.178.207.198',  // IP address of server running MSSQL
-  username: 'sptstaging', // User name to your MSSQL database
-  password: 'SPT@123106',
-  database: 'spt_staging', // Use the specified database
+  host: process.env.DB_HOST,
   port: 1433,
+  dialect: process.env.DB_TYPE as Dialect,
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   sync: false,
   dialectOptions: {
     options: {
@@ -29,3 +31,8 @@ export const dbConfig = {
       acquire: 60000
   }
 };
+
+export const config = {
+  fileUploadPath : process.env.FILE_PATH,
+  baseUrl:  process.env.API_BASE_URL
+}

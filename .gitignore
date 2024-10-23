@@ -10,3 +10,8 @@ package-lock.json
 # Ignore delete cache files
 **/.DS_Store
 coverage/
+.env
+.env.local
+.env.*.local
+.env.sandbox
+.env.production

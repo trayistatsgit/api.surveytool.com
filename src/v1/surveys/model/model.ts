@@ -10,7 +10,7 @@ interface SurveyAttributes {
   surveyStatus: string;
   compeleteRequired?: number;
   isActive: boolean;
-  logo?: string;
+  logo?: string | null;
   totalPage: number;
   createdBy: string;
   updatedBy?: string;
@@ -30,7 +30,7 @@ class Survey extends Model<SurveyAttributes, SurveyCreationAttributes> implement
   public surveyStatus!: string;
   public compeleteRequired?: number;
   public isActive!: boolean;
-  public logo?: string;
+  public logo?: string | null;
   public totalPage!: number;
   public createdBy!: string;
   public updatedBy?: string;
