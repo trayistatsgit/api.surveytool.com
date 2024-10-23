@@ -11,7 +11,7 @@ export const surveyDetail = async (queryParams?: {
   const offset = (currentPage - 1) * pageSize; 
 
   const { count: totalCount, rows: surveys } = await Survey.findAndCountAll({
-    attributes: ['id', 'surveyName', 'surveyStatus', 'isActive', 'createdAt'],
+    attributes: ['id', 'surveyId', 'surveyName', 'surveyStatus', 'isActive', 'createdAt'],
     offset, 
     limit: pageSize, 
   });
