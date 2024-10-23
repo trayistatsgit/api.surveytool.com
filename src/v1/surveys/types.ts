@@ -1,8 +1,9 @@
-// Interface for updating a survey
 export interface IUpdateSurvey {
     surveyId: string;
     userId: string;
     surveyName: string;
+    fileData: IFileData;
+    logo?: string | null;
     surveyDescription: string;
   }
   
@@ -11,7 +12,7 @@ export interface IUpdateSurvey {
     surveyId: string;
     questionId: number;
     questionType: number;
-    questionText: string;
+    questionName: string;
     createdBy: string;
     options: IOptionData[];
   }
@@ -19,11 +20,9 @@ export interface IUpdateSurvey {
   // Interface for question options
   interface IOptionData {
     optionId: number | null;
-    optionName: string | null;
-  }
-  
-  // Interface for retrieving survey details by ID
-  export interface IGetSurveyById {
+    optionText: string | null;
+}
+export interface IGetSurveyById {
     surveyId: string;
     userId: string | number;
   }
@@ -31,6 +30,29 @@ export interface IUpdateSurvey {
   // Interface for deleting an option
   export interface IOptionDeleteData {
     optionId: number;
-    userId:  string;
+    userId: string;
+}
+
+
+type Option = string | number | number[];
+
+export interface Question {
+    questionId: number;
+    questionType: number;
+    options: Option;
+}
+
+export interface IAttemptSurveyBody {
+    surveyId: string;
+    participantUrl: string;
+    questions: Question[];
+}
+export interface IFileData {
+    fieldname: string;
+    originalname: string;
+    encoding: string;
+    mimetype: string;
+    buffer: Buffer;
+    size: number;
+    surveyId: string;
   }
-  

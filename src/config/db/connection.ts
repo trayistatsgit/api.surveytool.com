@@ -1,5 +1,5 @@
 import { Sequelize, Options, Dialect } from 'sequelize';
-import { dbConfig } from './config';
+import { dbConfig } from '../config';
 interface SequelizeConfig extends Options {
   host: string;
   port: number;
@@ -12,6 +12,7 @@ const createSequelizeInstance = (database: string, username: string, password: s
     port,
     dialect: dbConfig.dialect as Dialect,
     logging: true,
+    timezone: 'Z',
     dialectOptions: {
       options: {
         encrypt: true,
@@ -37,7 +38,8 @@ const createSequelizeInstance = (database: string, username: string, password: s
   } as SequelizeConfig);
 };
 
-export const sequelize = createSequelizeInstance(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.host, dbConfig.port);
+export const sequelize = createSequelizeInstance(dbConfig.database || '', dbConfig.username || '', dbConfig.password || '', dbConfig.host || '', dbConfig.port);
+
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
