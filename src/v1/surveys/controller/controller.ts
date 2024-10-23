@@ -67,3 +67,14 @@ export const attemptSurvey = async (req: Request, res: Response): Promise<void> 
         errorResponseHandler(res, error);
     }
 };
+
+export const surveyDetail = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const bodyData = req.query;
+      const response = await surveyService.surveyDetail(bodyData);
+      responseHandler(res, response);
+    } catch (error) {
+      errorResponseHandler(res, error);
+    }
+  };
+

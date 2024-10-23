@@ -1,7 +1,5 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from '../../../config/db/connection';
-
-// Define the Survey attributes interface
 interface SurveyAttributes {
   id?: number;
   surveyId?: string;
@@ -14,14 +12,12 @@ interface SurveyAttributes {
   totalPage: number;
   createdBy: string;
   updatedBy?: string;
-  createdAt?: Date; // Will be set automatically
-  updatedAt?: Date; // Will be set automatically
+  createdAt?: Date; 
+  updatedAt?: Date; 
 }
 
-// Optional fields for creating a new survey
 type SurveyCreationAttributes = Optional<SurveyAttributes, 'id' | 'surveyDescription' | 'logo' | 'updatedBy'| 'surveyId'>;
 
-// Survey model class
 class Survey extends Model<SurveyAttributes, SurveyCreationAttributes> implements SurveyAttributes {
   public id!: number;
   public surveyId!: string;
@@ -34,8 +30,6 @@ class Survey extends Model<SurveyAttributes, SurveyCreationAttributes> implement
   public totalPage!: number;
   public createdBy!: string;
   public updatedBy?: string;
-
-  // Automatically managed by Sequelize
   public readonly createdAt!: Date; 
   public readonly updatedAt!: Date; 
 }

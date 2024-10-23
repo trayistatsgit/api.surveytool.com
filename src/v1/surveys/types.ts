@@ -5,24 +5,30 @@ export interface IUpdateSurvey {
     fileData: IFileData;
     logo?: string | null;
     surveyDescription: string;
-}
-export interface IAddQuestion {
+  }
+  
+  // Interface for adding a question to a survey
+  export interface IAddQuestion {
     surveyId: string;
     questionId: number;
     questionType: number;
     questionName: string;
     createdBy: string;
     options: IOptionData[];
-}
-interface IOptionData {
+  }
+  
+  // Interface for question options
+  interface IOptionData {
     optionId: number | null;
     optionText: string | null;
 }
 export interface IGetSurveyById {
     surveyId: string;
     userId: string | number;
-}
-export interface IOptionDeletData {
+  }
+  
+  // Interface for deleting an option
+  export interface IOptionDeleteData {
     optionId: number;
     userId: string;
 }
