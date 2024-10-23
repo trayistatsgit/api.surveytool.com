@@ -1,27 +1,58 @@
 import { ServiceResponse } from "../../helpers/responseHandler";
 import User from "../model/model";
- 
-// Get all users with a structured response
-export const   login = async (bodyData?: unknown): Promise<ServiceResponse<{ User: any }[]>> => {
+import bcrypt from "bcrypt"; 
+
+
+export const login = async (email: string, password: string): Promise<ServiceResponse<{ user: { email: string } } | null>> => {
   try {
-    const users = await User.findAll({
+ 
+    const user = await User.findOne({
+      where: { email },
       attributes: ['email', 'password'],
     });
- 
+
+   
+    if (!user) {
+      return {
+        success: false,
+        status: 401, 
+        message: "Invalid email or password",
+        errors: true,
+        data: null,
+      };
+    }
+
+    // Compare the provided password with the stored hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
+      return {
+        success: false,
+        status: 401, 
+        message: "Invalid email or password",
+        errors: true,
+        data: null,
+      };
+    }
+
+   
     return {
       success: true,
       status: 200,
       message: "Login successful",
       errors: false,
-      data:[],
+      data: {
+        user: { email: user.email }, 
+      },
     };
   } catch (error) {
+    console.error('Login error:', error); 
     return {
       success: false,
       status: 500,
-      message: "Failed to fetch users",
+      message: "Internal server error",
       errors: true,
-      data: [],
+      data: null,
     };
   }
 };

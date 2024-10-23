@@ -58,9 +58,6 @@ export const surveyOptionSoftDelete = async (req: Request, res: Response): Promi
 export const surveyDetail = async (req: Request, res: Response): Promise<void> => {
     try {
       const bodyData = req.query;
-
-      
-
       const response = await surveyService.surveyDetail(bodyData);
       responseHandler(res, response);
     } catch (error) {
