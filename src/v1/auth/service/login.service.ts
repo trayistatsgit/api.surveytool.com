@@ -1,8 +1,7 @@
 import { ServiceResponse } from "../../helpers/responseHandler";
 import User from "../model/model";
-import bcrypt from "bcrypt"; 
-
-
+import bcrypt from "bcrypt";
+const jwt = require('jsonwebtoken');
 export const login = async (email: string, password: string): Promise<ServiceResponse<{ user: { email: string } } | null>> => {
   try {
  
@@ -34,7 +33,10 @@ export const login = async (email: string, password: string): Promise<ServiceRes
         data: null,
       };
     }
-
+const toeknObject={
+  email :user.email
+}
+const jwtToken=jwt.sign(toeknObject,process.env.SECRET,{expiresIn:'1h'})
    
     return {
       success: true,
@@ -42,7 +44,8 @@ export const login = async (email: string, password: string): Promise<ServiceRes
       message: "Login successful",
       errors: false,
       data: {
-        user: { email: user.email }, 
+        user: jwtToken,
+        
       },
     };
   } catch (error) {

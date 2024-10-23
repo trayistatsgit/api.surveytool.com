@@ -10,6 +10,7 @@ class User extends Model {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   static findone: any;
+  genratedToken: any;
 }
  
 // Corrected User.init structure
