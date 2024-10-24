@@ -36,3 +36,10 @@ export const config = {
   fileUploadPath : process.env.FILE_PATH,
   baseUrl:  process.env.API_BASE_URL
 }
+
+interface IJwtConfig {
+secretKey : string | undefined;
+}
+export const jwtConfig: IJwtConfig = {
+  secretKey: process.env.JWT_SECRETE_KEY,
+};

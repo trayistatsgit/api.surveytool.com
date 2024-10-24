@@ -27,10 +27,10 @@ questionType.init(
       defaultValue: true,
     },
   },
-  {
+{
     sequelize,
     tableName: 'questionTypes',
     freezeTableName: true,
-  }
+  }  
 );
 export default questionType;
