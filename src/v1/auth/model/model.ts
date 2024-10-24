@@ -1,17 +1,27 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../../config/db/connection';
- 
-class User extends Model {
+
+interface IUserAttributes {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isActive?: number; // optional, in case it's not set
+}
+interface UserCreationAttributes extends Optional<IUserAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+class User extends Model<IUserAttributes,UserCreationAttributes> implements IUserAttributes {
   public id!: number;
   public username!: string;
   public email!: string;
   public password!: string;
- 
+  public isActive!: number;
+
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-  static findone: any;
 }
- 
+
 // Corrected User.init structure
 User.init(
   {
@@ -47,10 +57,10 @@ User.init(
     freezeTableName: true,
   }
 );
- 
- 
-export const create =  () => {
-   User.sync();
+
+export const create = () => {
+  User.sync();
 };
- 
+
 export default User;
+export { IUserAttributes };
