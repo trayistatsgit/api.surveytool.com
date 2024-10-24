@@ -4,7 +4,7 @@ import logger from 'morgan';
 import { allRouter } from './v1/routes/routes';
 import { connectToDatabase } from './config/db/connection';
 import { config } from './config/config';
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 const app = express();
 app.use(logger('dev'));
 app.set('port', process.env.PORT || 4002);
@@ -13,7 +13,7 @@ app.set('views', path.join(__dirname, 'views'));
 export const environment = app.get('env');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser())
+// app.use(cookieParser())
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/static', express.static(path.join(config.fileUploadPath ?? '', '\\sptsurveyimages\\')));
@@ -49,5 +49,11 @@ process
       errorData = err.stack;
     }
   });
+  // const crypto = require('crypto');
 
+  // // Generate a 32-byte (256-bit) random secret key for JWT
+  // const jwtSecretKey = crypto.randomBytes(32).toString('hex');
+  
+  // console.log('JWT Secret Key:', jwtSecretKey);
+  
 export default app;
