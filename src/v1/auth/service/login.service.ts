@@ -34,18 +34,15 @@ export const login = async (loginData: ILoginData): Promise<ServiceResponse<{ us
         data: null,
       };
     }
-const toeknObject={
-  email :user.email
-}
-const jwtToken=jwt.sign(toeknObject,process.env.SECRET,{expiresIn:'1h'})
-   
     return {
       success: true,
       status: 200,
       message: messages.LOGIN_MSG,
       errors: false,
       data: {
-        user: jwtToken,
+        user: {
+          email: ""
+        },
         
       },
     };
